@@ -1,0 +1,3 @@
+﻿  akinator.cpp
+C:\Users\Пользователь\source\repos\akinator\akinator\akinator.cpp(143,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  akinator.vcxproj -> C:\Users\Пользователь\source\repos\akinator\x64\Debug\akinator.exe
