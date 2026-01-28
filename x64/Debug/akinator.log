@@ -1,4 +1,4 @@
 ﻿  akinator.cpp
-C:\Users\Пользователь\source\repos\akinator\akinator\akinator.cpp(238,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-C:\Users\Пользователь\source\repos\akinator\akinator\akinator.cpp(260,15): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Пользователь\source\repos\akinator\akinator\akinator.cpp(311,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\Пользователь\source\repos\akinator\akinator\akinator.cpp(333,15): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
   akinator.vcxproj -> C:\Users\Пользователь\source\repos\akinator\x64\Debug\akinator.exe

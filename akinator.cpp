@@ -11,7 +11,7 @@ using namespace std;
 
 
 
-//множество всех чисел
+// множество всех чисел
 set<int> numbers{
     10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
     20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
@@ -24,7 +24,7 @@ set<int> numbers{
     90, 91, 92, 93, 94, 95, 96, 97, 98, 99
 };
 
-//подмножество четный чисел
+// подмножество четный чисел
 set<int> even_numbers{
     10, 12, 14, 16, 18,
     20, 22, 24, 26, 28,
@@ -36,6 +36,33 @@ set<int> even_numbers{
     80, 82, 84, 86, 88,
     90, 92, 94, 96, 98
 };
+
+// подмножество чисел которые кратны 3
+set<int> multiples_of_3{
+    12, 15, 18,
+    21, 24, 27,
+    30, 33, 36, 39,
+    42, 45, 48,
+    51, 54, 57,
+    60, 63, 66, 69,
+    72, 75, 78,
+    81, 84, 87,
+    90, 93, 96, 99
+};
+
+// подмножество простых чисел
+set<int> prime_numbers{
+    11, 13, 17, 19,
+    23, 29,
+    31, 37,
+    41, 43, 47,
+    53, 59,
+    61, 67,
+    71, 73, 79,
+    83, 89,
+    97
+};
+
 
 // подмножество чисел, первая цифра больше второй
 set<int> greater_first_digit{
@@ -49,6 +76,51 @@ set<int> greater_first_digit{
     80, 81, 82, 83, 84, 85, 86, 87,
     90, 91, 92, 93, 94, 95, 96, 97, 98
 };
+
+//Сумма цифр нечетная
+set<int> sum_digits_odd{
+    10, 12, 14, 16, 18,
+    21, 23, 25, 27, 29,
+    30, 32, 34, 36, 38,
+    41, 43, 45, 47, 49,
+    50, 52, 54, 56, 58,
+    61, 63, 65, 67, 69,
+    70, 72, 74, 76, 78,
+    81, 83, 85, 87, 89,
+    90, 92, 94, 96, 98
+};
+
+//первая цифра нечетная
+set<int> first_digit_odd{
+    10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
+    50, 51, 52, 53, 54, 55, 56, 57, 58, 59,
+    70, 71, 72, 73, 74, 75, 76, 77, 78, 79,
+    90, 91, 92, 93, 94, 95, 96, 97, 98, 99
+};
+
+// подмножество чисел, котрые кратны 5
+set<int> multiples_of_5{
+    10, 15,
+    20, 25,
+    30, 35,
+    40, 45,
+    50, 55,
+    60, 65,
+    70, 75,
+    80, 85,
+    90, 95
+};
+
+ // подмножество где все числа боль 55
+set<int> greater_than_55{
+    56, 57, 58, 59,
+    60, 61, 62, 63, 64, 65, 66, 67, 68, 69,
+    70, 71, 72, 73, 74, 75, 76, 77, 78, 79,
+    80, 81, 82, 83, 84, 85, 86, 87, 88, 89,
+    90, 91, 92, 93, 94, 95, 96, 97, 98, 99
+};
+
 
 // подмножество чисел, у которых сумма цифр равна 10
 set<int> sum_ten_numbers{
@@ -133,6 +205,7 @@ set<int> zero_numbers{
     40, 50, 60, 
     70, 80, 90
 };
+
 
 //защита ввода
 bool answ() {
@@ -246,7 +319,7 @@ int main()
         set<int> number = numbers;
 
         //задаём максимальное количество попросов
-        vector<int> num_question = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
+        vector<int> num_question = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
 
         //номер вопроса
         int number_question = 1;
@@ -360,6 +433,48 @@ int main()
                 break;
             case 14://проверка дают ли сумму цифры в числе 10
                 new_number = get_set(number, number_question, ". В вашем числе сумма цифр даёт 10?: ", sum_ten_numbers);
+                if (number != new_number) {
+                    number_question++;
+                }
+                number = new_number;
+                break;
+            case 15://проверка на кратность 3
+                new_number = get_set(number, number_question, ". Ваше число кратно трём?: ", multiples_of_3);
+                if (number != new_number) {
+                    number_question++;
+                }
+                number = new_number;
+                break;
+            case 16://проверка простое число
+                new_number = get_set(number, number_question, ". Ваше число простое?: ", prime_numbers);
+                if (number != new_number) {
+                    number_question++;
+                }
+                number = new_number;
+                break;
+            case 17://Сумма цифр неченая
+                new_number = get_set(number, number_question, ". Сумма цифр вашего числа нечетная?: ", sum_digits_odd);
+                if (number != new_number) {
+                    number_question++;
+                }
+                number = new_number;
+                break;
+            case 18://проверка является ли первое число нечетная
+                new_number = get_set(number, number_question, ". В вашем числе первая цифра нечетная?: ", first_digit_odd);
+                if (number != new_number) {
+                    number_question++;
+                }
+                number = new_number;
+                break;
+            case 19://проверка кратно ли число 5
+                new_number = get_set(number, number_question, ". Кратно ли ваше число пяти?: ", multiples_of_5);
+                if (number != new_number) {
+                    number_question++;
+                }
+                number = new_number;
+                break;
+            case 20://проверка число больше 55
+                new_number = get_set(number, number_question, ". Ваше число больше 55?: ", greater_than_55);
                 if (number != new_number) {
                     number_question++;
                 }
