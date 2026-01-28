@@ -5,6 +5,7 @@
 #include <iterator>
 #include <cstdlib> 
 #include <ctime> 
+#include <string> 
 
 using namespace std;
 
@@ -35,6 +36,20 @@ set<int> even_numbers{
     80, 82, 84, 86, 88,
     90, 92, 94, 96, 98
 };
+
+// подмножество чисел, первая цифра больше второй
+set<int> greater_first_digit{
+    10,
+    20, 21,
+    30, 31, 32,
+    40, 41, 42, 43,
+    50, 51, 52, 53, 54,
+    60, 61, 62, 63, 64, 65,
+    70, 71, 72, 73, 74, 75, 76,
+    80, 81, 82, 83, 84, 85, 86, 87,
+    90, 91, 92, 93, 94, 95, 96, 97, 98
+};
+
 
 // подмножество чисел, которые являются полиномами
 set<int> equality_numbers{
@@ -95,7 +110,7 @@ set<int> seven_numbers{
 // подмножество чисел, которые содержат цифру 8
 set<int> eight_numbers{
     18, 28, 38, 48, 58, 68, 
-    70, 80, 81, 82, 83, 84, 
+    78, 80, 81, 82, 83, 84, 
     85, 86, 87, 88, 89, 98
 };
 
@@ -113,13 +128,24 @@ set<int> zero_numbers{
     70, 80, 90
 };
 
-//проверка на четность
-set<int> even_set(set<int> number, int number_question) {
+//проверка на условие
+set<int> get_set(set<int> number, int number_question, string str, set<int> n_condition) {
+
+    set<int> condition_set;
+
+    set_intersection(
+        number.begin(), number.end(),
+        n_condition.begin(), n_condition.end(),
+        inserter(condition_set, condition_set.begin()));
+
+    if (condition_set.empty() || number == condition_set) {
+        return number;
+    }
+
     bool answer = 0;
-    cout << endl;
-    cout << number_question << ". Ваше число четное?: ";
+    cout << number_question << str;
     cin >> answer;
-    cout << endl << endl;
+    cout << endl;
     
     //вывод на ответ
     set<int> answer_set;
@@ -128,56 +154,39 @@ set<int> even_set(set<int> number, int number_question) {
         //пересечение множеств
         set_intersection(
             number.begin(), number.end(),
-            even_numbers.begin(), even_numbers.end(),
+            n_condition.begin(), n_condition.end(),
             inserter(answer_set, answer_set.begin()));
     }
     else {
         //разность множеств
         set_difference(
             number.begin(), number.end(),
-            even_numbers.begin(), even_numbers.end(),
+            n_condition.begin(), n_condition.end(),
             inserter(answer_set, answer_set.begin()));
     }
     
     return answer_set;
 }
 
-//проверка на равенство 2х цифр
-set<int> equality_set(set<int> number, int number_question) {
-    bool answer = 0;
-    cout << endl;
-    cout << number_question << ". В вашем числе две одинаковые цифры?: ";
-    cin >> answer;
-    cout << endl << endl;
-
-    //вывод на ответ
-    set<int> answer_set;
-
-    if (answer) {
-        //пересечение множеств
-        set_intersection(
-            number.begin(), number.end(),
-            equality_numbers.begin(), equality_numbers.end(),
-            inserter(answer_set, answer_set.begin()));
-    }
-    else {
-        //разность множеств
-        set_difference(
-            number.begin(), number.end(),
-            equality_numbers.begin(), equality_numbers.end(),
-            inserter(answer_set, answer_set.begin()));
-    }
-
-    return answer_set;
-}
 
 //проверка на наличие в числе цифры
 set<int> number_set(set<int> number, int number_question, int num, set<int> n_number) {
+
+    set<int> condition_set;
+
+    set_intersection(
+        number.begin(), number.end(),
+        n_number.begin(), n_number.end(),
+        inserter(condition_set, condition_set.begin()));
+
+    if (condition_set.empty() || number == condition_set) {
+        return number;
+    }
+
     bool answer = 0;
-    cout << endl;
     cout << number_question << ". В вашем числе есть цифра " << num << "?: ";
     cin >> answer;
-    cout << endl << endl;
+    cout << endl;
 
     //вывод на ответ
     set<int> answer_set;
@@ -214,7 +223,7 @@ int main()
         set<int> number = numbers;
 
         //задаём максимальное количество попросов
-        vector<int> num_question = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+        vector<int> num_question = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
 
         //номер вопроса
         int number_question = 1;
@@ -222,7 +231,7 @@ int main()
         cout << "Зраствуйте, я попытаюсь угадать ваще число!!" << endl;
         cout << "Загадайте число в диапозонге от 10 до 99" << endl;
         cout << "Я буду задавать вопросы, отвечайте на них - 1(да) или 0(нет)" << endl;
-        cout << "Начнём!" << endl;
+        cout << "Начнём!" << endl << endl;
 
         //масимальное количество вопросов
         int i = num_question.size();
@@ -231,46 +240,103 @@ int main()
             //определяем номер вопроса
             int question = rand() % i;
 
+            set<int> new_number;
+
             switch (num_question[question])
             {
             case 1://проверка на четность
-                number = even_set(number, number_question);
+                new_number = get_set(number, number_question, ". Ваше число четное?: ", even_numbers);
+                if (number != new_number) {
+                    number_question++;
+                }
+                number = new_number;
                 break;
             case 2://проверка на равенство двух цифр
-                number = equality_set(number, number_question);
+                new_number = get_set(number, number_question, ". В вашем числе две одинаковые цифры?: ", equality_numbers);
+                if (number != new_number) {
+                    number_question++;
+                }
+                number = new_number;
                 break;
             case 3://проверка есть ли число 1
-                number = number_set(number, number_question, 1, one_numbers);
+                new_number = number_set(number, number_question, 1, one_numbers);
+                if (number != new_number) {
+                    number_question++;
+                }
+                number = new_number;
                 break;
             case 4://проверка есть ли число 2
-                number = number_set(number, number_question, 2, two_numbers);
+                new_number = number_set(number, number_question, 2, two_numbers);
+                if (number != new_number) {
+                    number_question++;
+                }
+                number = new_number;
                 break;
             case 5://проверка есть ли число 3
-                number = number_set(number, number_question, 3, three_numbers);
+                new_number = number_set(number, number_question, 3, three_numbers);
+                if (number != new_number) {
+                    number_question++;
+                }
+                number = new_number;
                 break;
             case 6://проверка есть ли число 4
-                number = number_set(number, number_question, 4, four_numbers);
+                new_number = number_set(number, number_question, 4, four_numbers);
+                if (number != new_number) {
+                    number_question++;
+                }
+                number = new_number;
                 break;
             case 7://проверка есть ли число 5
-                number = number_set(number, number_question, 5, five_numbers);
+                new_number = number_set(number, number_question, 5, five_numbers);
+                if (number != new_number) {
+                    number_question++;
+                }
+                number = new_number;
                 break;
             case 8://проверка есть ли число 6
-                number = number_set(number, number_question, 6, six_numbers);
+                new_number = number_set(number, number_question, 6, six_numbers);
+                if (number != new_number) {
+                    number_question++;
+                }
+                number = new_number;
                 break;
             case 9://проверка есть ли число 7
-                number = number_set(number, number_question, 7, seven_numbers);
+                new_number = number_set(number, number_question, 7, seven_numbers);
+                if (number != new_number) {
+                    number_question++;
+                }
+                number = new_number;
                 break;
             case 10://проверка есть ли число 8
-                number = number_set(number, number_question, 8, eight_numbers);
+                new_number = number_set(number, number_question, 8, eight_numbers);
+                if (number != new_number) {
+                    number_question++;
+                }
+                number = new_number;
                 break;
             case 11://проверка есть ли число 9
-                number = number_set(number, number_question, 9, nine_numbers);
+                new_number = number_set(number, number_question, 9, nine_numbers);
+                if (number != new_number) {
+                    number_question++;
+                }
+                number = new_number;
                 break;
             case 12://проверка есть ли число 0
-                number = number_set(number, number_question, 0, zero_numbers);
+                new_number = number_set(number, number_question, 0, zero_numbers);
+                if (number != new_number) {
+                    number_question++;
+                }
+                number = new_number;
+                break;
+            case 13://проверка больше ли первая цифра чем вторая
+                new_number = get_set(number, number_question, ". В вашем числе первая цифра больше второй?: ", greater_first_digit);
+                if (number != new_number) {
+                    number_question++;
+                }
+                number = new_number;
                 break;
             default:
-                
+                cout << "Произогла ошибка, мы обязательно её исправим." << endl;
                 break;
             }
 
@@ -278,15 +344,14 @@ int main()
             num_question.erase(num_question.begin() + question);
             //уменьшаем количетво незаданых вопросов
             i--;
-            //увеличиваем номер вопроса
-            number_question++;
+            
         }
 
         if (number.empty()) {
             cout << "Вы отвечали не честно!!!" << endl << endl;
         }
         else {
-            cout << "Ваше число: " << *number.begin() << "?: ";
+            cout << "Ваше число " << *number.begin() << "?: ";
             bool answer;
             cin >> answer;
             cout << endl << endl;
