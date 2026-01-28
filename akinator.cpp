@@ -282,15 +282,21 @@ int main()
             number_question++;
         }
 
-        cout << "Ваше число: " << *number.begin() << "?: ";
-        bool answer;
-        cin >> answer;
-        cout << endl << endl;
-        if (answer) {
-            cout << "Ура, я угадал ваше число. Это было просто!" << endl;
+        if (number.empty()) {
+            cout << "Вы отвечали не честно!!!" << endl << endl;
         }
         else {
-            cout << "К сожелению я не смог угадать ваше число" << endl;
+            cout << "Ваше число: " << *number.begin() << "?: ";
+            bool answer;
+            cin >> answer;
+            cout << endl << endl;
+
+            if (answer) {
+                cout << "Ура, я угадал ваше число. Это было просто!" << endl;
+            }
+            else {
+                cout << "К сожелению я не смог угадать ваше число" << endl;
+            }
         }
         cout << "Сыграем ещё раз?: ";
         cin >> game;
