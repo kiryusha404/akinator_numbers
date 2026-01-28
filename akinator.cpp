@@ -50,6 +50,12 @@ set<int> greater_first_digit{
     90, 91, 92, 93, 94, 95, 96, 97, 98
 };
 
+// подмножество чисел, у которых сумма цифр равна 10
+set<int> sum_ten_numbers{
+    19, 28, 37, 
+    46, 55, 64, 
+    73, 82, 91
+};
 
 // подмножество чисел, которые являются полиномами
 set<int> equality_numbers{
@@ -240,13 +246,13 @@ int main()
         set<int> number = numbers;
 
         //задаём максимальное количество попросов
-        vector<int> num_question = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
+        vector<int> num_question = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
 
         //номер вопроса
         int number_question = 1;
 
-        cout << "Зраствуйте, я попытаюсь угадать ваще число!!" << endl;
-        cout << "Загадайте число в диапозонге от 10 до 99" << endl;
+        cout << "Здраствуйте, я попытаюсь угадать ваше число!!" << endl;
+        cout << "Загадайте число в диапозоне от 10 до 99" << endl;
         cout << "Я буду задавать вопросы, отвечайте на них - 1(да) или 0(нет)" << endl;
         cout << "Начнём!" << endl << endl;
 
@@ -262,7 +268,7 @@ int main()
             switch (num_question[question])
             {
             case 1://проверка на четность
-                new_number = get_set(number, number_question, ". Ваше число четное?: ", even_numbers);
+                new_number = get_set(number, number_question, ". Ваше число чётное?: ", even_numbers);
                 if (number != new_number) {
                     number_question++;
                 }
@@ -352,8 +358,15 @@ int main()
                 }
                 number = new_number;
                 break;
+            case 14://проверка дают ли сумму цифры в числе 10
+                new_number = get_set(number, number_question, ". В вашем числе сумма цифр даёт 10?: ", sum_ten_numbers);
+                if (number != new_number) {
+                    number_question++;
+                }
+                number = new_number;
+                break;
             default:
-                cout << "Произогла ошибка, мы обязательно её исправим." << endl;
+                cout << "Произошла ошибка, мы обязательно её исправим." << endl;
                 break;
             }
 
@@ -377,7 +390,7 @@ int main()
                 cout << "Ура, я угадал ваше число. Это было просто!" << endl;
             }
             else {
-                cout << "К сожелению я не смог угадать ваше число" << endl;
+                cout << "К сожелению, я не смог угадать ваше число" << endl;
             }
         }
         cout << "Сыграем ещё раз?: ";
