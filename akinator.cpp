@@ -128,6 +128,23 @@ set<int> zero_numbers{
     70, 80, 90
 };
 
+//защита ввода
+bool answ() {
+    string str;
+    while (1) {
+        cin >> str;
+        if (str == "1") {
+            return 1;
+        }
+        else if (str == "0") {
+            return 0;
+        }
+        else {
+            cout << endl << "Введите корректное значение (1 или 0): ";
+        }
+    }
+}
+
 //проверка на условие
 set<int> get_set(set<int> number, int number_question, string str, set<int> n_condition) {
 
@@ -144,7 +161,7 @@ set<int> get_set(set<int> number, int number_question, string str, set<int> n_co
 
     bool answer = 0;
     cout << number_question << str;
-    cin >> answer;
+    answer = answ();
     cout << endl;
     
     //вывод на ответ
@@ -185,7 +202,7 @@ set<int> number_set(set<int> number, int number_question, int num, set<int> n_nu
 
     bool answer = 0;
     cout << number_question << ". В вашем числе есть цифра " << num << "?: ";
-    cin >> answer;
+    answer = answ();
     cout << endl;
 
     //вывод на ответ
@@ -353,7 +370,7 @@ int main()
         else {
             cout << "Ваше число " << *number.begin() << "?: ";
             bool answer;
-            cin >> answer;
+            answer = answ();
             cout << endl << endl;
 
             if (answer) {
@@ -364,7 +381,7 @@ int main()
             }
         }
         cout << "Сыграем ещё раз?: ";
-        cin >> game;
+        game = answ();
 
     }
 }
